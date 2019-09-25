@@ -35,12 +35,20 @@
                     return
                 }
                 const id = this.items.length + 1
-                this.items.push({
+                //push 在结尾添加 unshift在开头添加
+                this.items.unshift({
                     id,
                     content,
                     completed: false
                 })
+                //todo 存数据到mysql
                 event.target.value = ''
+            }
+        },
+        computed: {
+            remaining() {
+                //箭头函数
+                return this.items.filter(item => !item.completed).length
             }
         }
     })
