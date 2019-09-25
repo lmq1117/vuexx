@@ -1,26 +1,17 @@
 (function (Vue) {
-    const items = [
-        {
-            id: 1,
-            content: 'vue.js',
-            completed: false
+
+    var STORATE_KEY = 'vue-todo-items'
+
+    const itemStorage = {
+        fetch: function () {
+            return JSON.parse(localStorage.getItem(STORATE_KEY) || '[]')
         },
-        {
-            id: 2,
-            content: 'java',
-            completed: true
-        },
-        {
-            id: 3,
-            content: 'php',
-            completed: true
-        },
-        {
-            id: 4,
-            content: 'go lang',
-            completed: false
-        },
-    ]
+        save: function (items) {
+            localStorage.setItem(STORATE_KEY, JSON.stringify(items))
+        }
+    }
+
+    const items = []
 
     Vue.directive('app-focus', {
         inserted(el, binding) {
@@ -31,8 +22,17 @@
     var app = new Vue({
         el: '#todoapp',
         data: {
-            items,
-            currentItem: null
+            items: itemStorage.fetch(),
+            currentItem: null,
+            filterStatus: 'all'
+        },
+        watch: {
+            items: {
+                deep: true,
+                handler: function (newItems, oldItems) {
+                    itemStorage.save(newItems)
+                }
+            }
         },
         directives: {
             'todo-focus': {
@@ -99,8 +99,30 @@
                         item.completed = newStatus
                     })
                 }
+            },
+            filterItems() {
+                switch (this.filterStatus) {
+                    case "active":
+                        return this.items.filter(item => !item.completed)
+                        break
+                    case "completed":
+                        return this.items.filter(item => item.completed)
+                        break
+                    default:
+                        return this.items
+
+                }
             }
         }
     })
+
+    window.onhashchange = function () {
+        console.log('hash has change' + window.location.hash)
+        // #/
+        var hash = window.location.hash.substr(2) || 'all'
+        app.filterStatus = hash
+
+    }
+    window.onhashchange()
 
 })(Vue);
