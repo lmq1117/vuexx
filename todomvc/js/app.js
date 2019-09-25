@@ -44,8 +44,11 @@
                 //todo 存数据到mysql
                 event.target.value = ''
             },
-            removeItem(index){
-                this.items.splice(index,1)
+            removeItem(index) {
+                this.items.splice(index, 1)
+            },
+            removeCompleted() {
+                this.items = this.items.filter(item => !item.completed)
             }
         },
         computed: {
@@ -53,13 +56,13 @@
                 //箭头函数
                 return this.items.filter(item => !item.completed).length
             },
-            toggleAll:{
-                get(){
+            toggleAll: {
+                get() {
                     console.log(this.remaining)
                     return this.remaining === 0
                 },
-                set(newStatus){
-                    this.items.forEach((item)=>{
+                set(newStatus) {
+                    this.items.forEach((item) => {
                         item.completed = newStatus
                     })
                 }
