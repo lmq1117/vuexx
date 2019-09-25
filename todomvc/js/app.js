@@ -22,10 +22,26 @@
         },
     ]
 
+    Vue.directive('app-focus', {
+        inserted(el, binding) {
+            el.focus()
+        }
+    })
+
     var app = new Vue({
         el: '#todoapp',
         data: {
-            items
+            items,
+            currentItem: null
+        },
+        directives: {
+            'todo-focus': {
+                update(el, binding) {
+                    if (binding.value) {
+                        el.focus()
+                    }
+                }
+            }
         },
         methods: {
             addItem(event) {
@@ -49,6 +65,23 @@
             },
             removeCompleted() {
                 this.items = this.items.filter(item => !item.completed)
+            },
+            toEdit(item) {
+                this.currentItem = item
+            },
+            cancelEdit() {
+                console.log(123456)
+
+                this.currentItem = null
+            },
+            finishEdit(item, index, event) {
+                const content = event.target.value.trim()
+                if (!event.target.value.trim()) {
+                    this.removeItem(index)
+                    return
+                }
+                item.content = content
+                this.currentItem = null
             }
         },
         computed: {
