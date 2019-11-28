@@ -37,4 +37,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     npm i -S element-ui
     npm i -S pubsub-js
 
+3 封装axios并测试 连 gin 框架
+
 ```
