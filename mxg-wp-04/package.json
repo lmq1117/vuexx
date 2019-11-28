@@ -1,0 +1,20 @@
+{
+  "name": "mxg-wp-04",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "show": "webpack -v",
+    "show-cli": "webpack-cli -v",
+    "start": "node ./src/main.js",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
