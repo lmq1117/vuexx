@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 // const BASE_URL = "http://localhost:8087/api/"
-const BASE_URL = "/api/"
+const BASE_URL = ""
 
 //测试一
 request.post(BASE_URL + "sport")

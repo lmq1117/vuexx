@@ -7,8 +7,8 @@ module.exports = {
 
         //代理
         proxy: {
-            '/api': {
-                target: 'http://localhost:8087',
+            [process.env.VUE_APP_BASE_API]: {
+                target: process.env.VUE_APP_SERVICE_URL,
                 changeOrigin: true,
                 //重写 暂时不需要
             },
