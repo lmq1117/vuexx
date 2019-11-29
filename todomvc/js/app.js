@@ -55,7 +55,8 @@
                 this.items.unshift({
                     id,
                     content,
-                    completed: false
+                    completed: false,
+                    created_at:(new Date()).toLocaleString()
                 })
                 //todo 存数据到mysql
                 event.target.value = ''
@@ -70,8 +71,6 @@
                 this.currentItem = item
             },
             cancelEdit() {
-                console.log(123456)
-
                 this.currentItem = null
             },
             finishEdit(item, index, event) {

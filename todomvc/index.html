@@ -34,7 +34,7 @@
                 :class="{completed:item.completed,editing:item === currentItem}">
                 <div class="view">
                     <input class="toggle" type="checkbox" v-model="item.completed">
-                    <label @dblclick="toEdit(item)">{{item.content}}</label>
+                    <label @dblclick="toEdit(item)">{{item.content}}<span style="margin-left:100px;font-size: xx-small;">{{item.created_at}}</span></label>
                     <button class="destroy" :value="item.id" @click="removeItem(index)"></button>
                 </div>
                 <input class="edit" :value="item.content" @keyup.esc="cancelEdit"
