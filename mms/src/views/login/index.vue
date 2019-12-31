@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import {login,getUserInfo} from "@/api/login";
+    import {login, getUserInfo} from "@/api/login";
 
     export default {
         data() {
@@ -30,11 +30,11 @@
                 rules: {
                     username: [
                         {required: true, message: "账号不能为空", trigger: 'blur'},
-                        { min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' }
+                        {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'}
                     ],
-                    password:[
+                    password: [
                         {required: true, message: "密码不能为空", trigger: 'blur'},
-                        { min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' }
+                        {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'}
                     ],
                 },
             }
@@ -43,40 +43,45 @@
         methods: {
             onSubmit(formName) {
                 // console.log('submit!' + Math.random());
-                this.$refs[formName].validate(valid=>{
+                this.$refs[formName].validate(valid => {
                     console.log(valid)
-                    if(valid){
+                    if (valid) {
                         // 提交api 验证用户名密码是否正确并返回token
-                        login(this.form.username,this.form.password).then(response => {
-                            console.log(response.data)
+                        login(this.form.username, this.form.password).then(response => {
+                            // console.log(response.data)
                             const resp = response.data
                             if (resp.code == "0000") {
                                 //获取token成功 拿token去获取userInfo
-                                getUserInfo(resp.token + resp.token).then(response => {
+                                getUserInfo(resp.token).then(response => {
                                     const respUser = response.data
-                                    if(respUser.code == "0000"){
+                                    if (respUser.code == "0000") {
                                         console.log(respUser)
-                                        localStorage.setItem("mms-user",JSON.stringify(respUser.data))
-                                        localStorage.setItem("mms-token",JSON.stringify(resp.token))
+                                        localStorage.setItem("mms-user", JSON.stringify(respUser.data))
+                                        localStorage.setItem("mms-token", JSON.stringify(resp.token))
+                                        //登录成功 跳转至首页
                                         this.$router.push("/")
                                     } else {
                                         this.$message({
-                                            message:respUser.message,
-                                            type:"warning",
+                                            message: respUser.message,
+                                            type: "warning",
                                         })
                                     }
 
                                 })
                             } else {
                                 this.$message({
-                                    message:resp.message,
-                                    type:"warning",
+                                    message: resp.message,
+                                    type: "warning",
                                 })
                             }
 
                         })
                     } else {
-                        console.log("submit error")
+                        this.$message({
+                            message: "submit valid error",
+                            type: "warning",
+                        })
+                        // console.log("submit valid error")
                     }
                 })
             }

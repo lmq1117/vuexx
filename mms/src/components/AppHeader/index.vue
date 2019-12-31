@@ -1,18 +1,18 @@
 <template>
     <div class="header">
         <a href="#/">
-            <img class="logo" src="@/assets/logo.png" width="25px">
+            <img class="logo" src="@/assets/logo.png" width="25px"/>
             <span class="company">会员管理系统</span>
         </a>
 
         <el-dropdown @command="handleCommand">
       <span class="el-dropdown-link">
-        欢迎您:admin!<i class="el-icon-arrow-down el-icon--right"></i>
+        欢迎您:admin!
+        <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="edit-password" icon="el-icon-edit">修改密码</el-dropdown-item>
                 <el-dropdown-item command="logout" icon="el-icon-s-fold">退出系统</el-dropdown-item>
-
             </el-dropdown-menu>
         </el-dropdown>
     </div>
@@ -20,14 +20,29 @@
 
 
 <script>
+    import {logout} from "@/api/login";
+
     export default {
-        methods:{
-            handleCommand(command){
-                this.$message("点击了："+command+" - xxx")
+        methods: {
+            handleCommand(command) {
+                switch (command) {
+                    case "edit-password":
+                        this.$message("点击了：" + command + " - xxx");
+                        break;
+                    case "logout":
+                        console.log(localStorage.getItem('mms-token'))
+                        logout(localStorage.getItem('mms-token')).then(response => {
+                            localStorage.removeItem("mms-user");
+                            localStorage.removeItem("mms-token");
+                            this.$router.push("/login");
+                        });
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-    }
-
+    };
 </script>
 
 <style scoped>
@@ -48,9 +63,8 @@
         margin-right: 40px;
     }
 
-    .el-dropdown-link{
-        color:white;
+    .el-dropdown-link {
+        color: white;
         cursor: pointer;
     }
-
 </style>
