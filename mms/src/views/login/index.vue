@@ -44,7 +44,6 @@
             onSubmit(formName) {
                 // console.log('submit!' + Math.random());
                 this.$refs[formName].validate(valid => {
-                    console.log(valid)
                     if (valid) {
                         // 提交api 验证用户名密码是否正确并返回token
                         login(this.form.username, this.form.password).then(response => {
@@ -55,9 +54,8 @@
                                 getUserInfo(resp.token).then(response => {
                                     const respUser = response.data
                                     if (respUser.code == "0000") {
-                                        console.log(respUser)
                                         localStorage.setItem("mms-user", JSON.stringify(respUser.data))
-                                        localStorage.setItem("mms-token", JSON.stringify(resp.token))
+                                        localStorage.setItem("mms-token", resp.token)
                                         //登录成功 跳转至首页
                                         this.$router.push("/")
                                     } else {
