@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全局注册</title>
+</head>
+<body>
+    <div id="app">
+        <component-a></component-a>
+    </div>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script>
+    //全局注册组件
+    /*
+        1 驼峰、横线分隔符
+        2 使用组件时 必须 横线分隔符
+    */
+
+    /*
+    总结
+        1 组件是可复用的vue实例，不需要手动实例化
+        2 与new Vue 接收相同的选项 data computed watch methods
+        3 组件中的data必须是个函数
+    */
+    Vue.component('component-a',{
+        template:`<div><h1>头部组件-{{ name }}</h1></div>`,
+        data:function (){
+            return {
+                name:'全局组件name'
+            }
+        }
+
+    })
+
+    new Vue({
+        el:'#app'
+    })
+    </script>
+</body>
+</html>
