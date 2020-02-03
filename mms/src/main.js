@@ -8,6 +8,9 @@ import router from "./router";
 
 Vue.use(ElementUI);
 
+//权限拦截
+import './permission'
+
 //消息提示与环境配置false 开发，true 生产
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
@@ -17,4 +20,4 @@ new Vue({
     render: h => h(App)
 }).$mount("#app");
 
-console.log(process.env.VUE_APP_BASE_API)
+// console.log(process.env.VUE_APP_BASE_API)

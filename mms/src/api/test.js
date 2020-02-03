@@ -6,7 +6,7 @@ const BASE_URL = ""
 //测试一
 request.post(BASE_URL + "sport")
     .then(response => {
-        console.log("post1",response.data.data[0].Content)
+        console.log("post1", response.data.data[0].Content)
     })
     .catch(error => {
         console.log(error)
