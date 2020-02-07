@@ -16,19 +16,7 @@
 </head>
 
 <body>
-  <div id="app">
-    <!-- 头部导航区域 -->
-    <app-navbar></app-navbar>
-    <div class="container-fluid">
-      <div class="row">
-        <!-- 左侧菜单区域 -->
-        <app-left></app-left>
-        <!-- 右侧主页区域 分上下两个区域 -->
-        <app-home></app-home>
-      </div>
-    </div>
-
-  </div>
+  <div id="app"></div>
 
   <script src="node_modules/vue/dist/vue.js"></script>
   <script src="components/AppNavbar.js"></script>
@@ -36,15 +24,14 @@
   <script src="components/home/DashBoard.js"></script>
   <script src="components/home/HomeList.js"></script>
   <script src="components/home/AppHome.js"></script>
+  <script src="App.js"></script>
   <script>
 
     new Vue({
       el: '#app',
-      components: {
-        AppNavbar,
-        AppLeft,
-        AppHome
-
+      template:'<app></app>',
+      components:{
+        App
       }
     })
   </script>
