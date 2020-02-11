@@ -4,7 +4,8 @@
 
         <!--右边上半区域-->
         <h1 class="page-header">Dashboard</h1>
-        <dash-board></dash-board>
+        
+        <dash-board v-bind:hobbies="hobbies"></dash-board>
         <!--右边下半区域-->
         <h2 class="sub-header">Section title</h2>
         <home-list></home-list>
@@ -12,6 +13,11 @@
     components: {
       DashBoard,
       HomeList
+    },
+    data() {
+      return {
+        hobbies: ['coding', '睡觉', '打豆豆', '吃饭']
+      }
     }
   }
 })()
