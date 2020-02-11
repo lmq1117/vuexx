@@ -4,12 +4,32 @@ const template = `<div class="row placeholders">
   <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200"
     height="200" class="img-responsive" alt="Generic placeholder thumbnail">
   <h4>{{hobby}}</h4>
-  <span class="text-muted">Something else</span>
+  <span class="text-muted">{{student.name}} Something else</span>
 </div>
 </div>`
 
 window.DashBoard = {
     template,
-    props:['hobbies']
+    // 方式1 指定传递属性名 数组形式
+    // props:['hobbies']
+
+    //方式2 指定传递属性名和属性数据类型 对象形式
+    // props:{
+    //   hobbies:Array,
+    //   student:Object
+    // }
+
+    //方式3 指定属性名 数据类型 必要性 默认值
+    props:{
+      hobbies:{
+        type:Array,
+        require:true
+      },
+      student:{
+        type:Object,
+        require:true,
+        default:{name:'mary'}
+      }
+    }
 }
 })()
