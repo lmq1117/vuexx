@@ -8,7 +8,9 @@
             <!-- 左侧菜单区域 -->
             <app-left></app-left>
             <!-- 右侧主页区域 分上下两个区域 -->
-            <app-home></app-home>
+            <app-home>
+            <h1 slot="dash-board-title" class="page-header">Dashboard Title </h1>
+            </app-home>
           </div>
         </div></div>`,
         components: {
