@@ -9,7 +9,7 @@
             <app-left></app-left>
             <!-- 右侧主页区域 分上下两个区域 -->
             <app-home>
-            <h1 slot="dash-board-title" class="page-header">Dashboard Title </h1>
+            <h1 slot="dash-board-title" class="page-header">{{title}}</h1>
             </app-home>
           </div>
         </div></div>`,
@@ -17,6 +17,11 @@
             AppNavbar,
             AppLeft,
             AppHome
+          },
+          data(){
+            return {
+              title:"仪表盘"
+            }
           }
     }
 })()
