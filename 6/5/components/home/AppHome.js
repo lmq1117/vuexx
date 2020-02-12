@@ -54,6 +54,8 @@
       },
       deleteHobby(index){
         this.hobbies.splice(index,1)
+        //发布消息 给订阅者
+        PubSub.publish('changeNum',1)
       }
     },
   }
