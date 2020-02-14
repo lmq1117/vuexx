@@ -117,11 +117,135 @@ module.exports = {
 
 #### 5.3.1 ElementUI简介
 
-5.3.2 ElementUI安装
+#### 5.3.2 ElementUI安装
 
 ```shell
 npm i -S element-ui
 ```
 
 5.3.3 完整引入ElementUI
+
+在mms\src\main.js 中 引入 element-ui 和 element-ui/lib/theme-chalk/index.css
+
+使用Vue.use(ElementUI);
+
+```javascript
+import Vue from "vue";
+import ElementUI from 'element-ui';//组件库
+import 'element-ui/lib/theme-chalk/index.css'//样式
+import App from "./App.vue";
+import router from "./router";
+
+//使用ElementUI
+Vue.use(ElementUI);
+
+//false 开发环境 更多警告来方便调试代码
+//true 生产环境 警告没有用 反而增加应用体积???
+Vue.config.productionTip = process.env.NODE_ENV === 'production';
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount("#app");
+```
+
+#### 5.3.4 ElementUI 插件安装
+
+安装如下两个插件
+
+1. ==Element UI Snipptes==
+2. ==HTML CSS Support==
+
+## 第六章 Axios封装 和 跨域
+
+6.1 封装Axios对象
+
+1. 在src目录下创建 utils\request.js
+
+### 6.5 解决开发环境跨域问题
+
+1. 在vue.config.js中使用devServer.proxy选项进行代理设置
+
+   ```javascript
+   module.exports = {
+       devServer: {
+           port: 8888,
+           host: "localhost",
+           https: false,
+           open: true,
+           //匹配api开头的请求
+           proxy: {
+               '/api': {
+                   //目标服务器，代理访问到 http://localhost:8001 golang后端端口
+                   target: 'http://localhost:8000',
+                   changeOrigin: true,//开启代理
+                   pathRewrite: {
+                       '^/api': '/api/v1',
+                   }
+   
+               }
+           }
+       },
+   
+       lintOnSave: false,//关闭格式检查
+       productionSourceMap: false//打包时不生成.map文件 加快打包速度
+   }
+   ```
+
+   
+
+2. test.js
+
+   ```javascript
+   import request from "@/utils/request"
+   
+   request({
+       method: "get",
+       url: '/api/members'//要匹配 vue.config.js 中 proxy
+   }).then(response => {
+       console.log('get', response.data)
+   })
+   ```
+
+   
+
+3. utils/request.js
+
+   ```javascript
+   import axios from 'axios'
+   
+   const request = axios.create({
+       baseURL:'http://localhost:8888',//相同域地址，会根据vue.config.js devServer.proxy配置规则使用代理
+       timeout:5000
+   })
+   
+   export default request
+   ```
+
+   
+
+4. HelloWorld.vue中引入 test.js
+
+   ```javascript
+   <script>
+   //引入test.js
+   import testApi from "@/api/test"
+   export default {
+     name: "HelloWorld",
+     props: {
+       msg: String
+     }
+   };
+   </script>
+   ```
+
+   
+
+5. 测试
+
+   重启项目 防止不生效
+
+   查看console，已获取golang后端返回数据
+
+   ![image-20200214192933675](C:\Users\kevin\AppData\Roaming\Typora\typora-user-images\image-20200214192933675.png)
 
