@@ -92,6 +92,18 @@ export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+  created(){
+    this.fetchMemberList()
+  },
+  methods:{
+    fetchMemberList(){
+      testApi.getList().then(response=>{
+        console.log("测试3 #### ",response.data.data.lists)
+      }).catch(error=>{
+        console.log(error)
+      })
+    }
   }
 };
 </script>
