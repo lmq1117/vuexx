@@ -173,6 +173,7 @@ new Vue({
            host: "localhost",
            https: false,
            open: true,
+           
            //匹配api开头的请求
            proxy: {
                '/api': {
@@ -182,7 +183,6 @@ new Vue({
                    pathRewrite: {
                        '^/api': '/api/v1',
                    }
-   
                }
            }
        },
@@ -248,4 +248,114 @@ new Vue({
    查看console，已获取golang后端返回数据
 
    ![image-20200214192933675](C:\Users\kevin\AppData\Roaming\Typora\typora-user-images\image-20200214192933675.png)
+
+### 6.7 配置不同环境 常量值
+
+1. 在mms根目录下创建 .env.development 和 .env.production 文件 并安装插件 ==DotENV==
+
+2. .env.development
+
+   ```javascript
+   #使用 VUE_APP_ 开头的变量会被webpack自动加载
+   
+   #定义请求的基础URL 方便跨域请求时使用
+   VUE_APP_BASE_API='/api'
+   
+   #接口服务地址
+   VUE_APP_SERVICE_URL='http://localhost:8000'
+   ```
+
+   
+
+3. .env.production
+
+   ```javascript
+   #使用 VUE_APP_ 开头的变量会被webpack自动加载
+   
+   #定义请求的基础URL 方便跨域请求时使用
+   VUE_APP_BASE_API='/pro_api'
+   ```
+
+   
+
+4. 测试 在main.js中添加以下代码，看浏览器控制台是否会输出
+
+   ```javascript
+   console.log(process.env.VUE_APP_BASE_API,'####',process.env.VUE_APP_SERVICE_URL)
+   ```
+
+   ![image-20200214203142087](C:\Users\kevin\AppData\Roaming\Typora\typora-user-images\image-20200214203142087.png)
+
+### 6.8 重构代理配置
+
+1. 在vue.config.js的 devServer.proxy 代理配置 
+
+
+- ==process.env.VUE_APP_BASE_API==
+- ==process.env.VUE_APP_SERVICE_URL==
+
+```javascript
+module.exports = {
+    devServer: {
+        port: 8888,
+        host: "localhost",
+        https: false,
+        open: true,
+        //匹配api开头的请求
+        proxy: {
+            [process.env.VUE_APP_BASE_API]: {
+                //目标服务器，代理访问到 http://localhost:8001 golang后端端口
+                target: process.env.VUE_APP_SERVICE_URL,
+                changeOrigin: true,//开启代理
+                pathRewrite: {
+                    ['^'+process.env.VUE_APP_BASE_API]: '/api/v1',
+                }
+
+            }
+        }
+    },
+
+    lintOnSave: false,//关闭格式检查
+    productionSourceMap: false//打包时不生成.map文件 加快打包速度
+}
+```
+
+2. 修改 utils/request.js 中 baseURL
+
+   ```javascript
+   import axios from 'axios'
+   
+   const request = axios.create({
+       // baseURL:'http://localhost:8888',//相同域地址，会根据vue.config.js devServer.proxy配置规则使用代理
+       // baseURL:'/',
+       //以下修改需要同时修改test.js中 url
+       // baseURL:'/api',
+       baseURL:process.env.VUE_APP_BASE_API,
+       timeout:5000
+   })
+   
+   export default request
+   ```
+
+   
+
+3. 根据2中注释修改 api/test.js  url
+
+   ```javascript
+   import request from "@/utils/request"
+   
+   request({
+       method: "get",
+       url: '/members'//要匹配 vue.config.js 中 proxy
+   }).then(response => {
+       console.log('get', response.data)
+   })
+   ```
+
+   
+
+4. 重启项目 查看console
+
+   ![image-20200214204148525](C:\Users\kevin\AppData\Roaming\Typora\typora-user-images\image-20200214204148525.png)
+
 

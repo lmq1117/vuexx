@@ -6,12 +6,12 @@ module.exports = {
         open: true,
         //匹配api开头的请求
         proxy: {
-            '/api': {
+            [process.env.VUE_APP_BASE_API]: {
                 //目标服务器，代理访问到 http://localhost:8001 golang后端端口
-                target: 'http://localhost:8000',
+                target: process.env.VUE_APP_SERVICE_URL,
                 changeOrigin: true,//开启代理
                 pathRewrite: {
-                    '^/api': '/api/v1',
+                    ['^'+process.env.VUE_APP_BASE_API]: '/api/v1',
                 }
 
             }

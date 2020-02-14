@@ -11,6 +11,8 @@ Vue.use(ElementUI);
 //true 生产环境 警告没有用 反而增加应用体积???
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
+console.log(process.env.VUE_APP_BASE_API,'####',process.env.VUE_APP_SERVICE_URL)
+
 new Vue({
   router,
   render: h => h(App)
