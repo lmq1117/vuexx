@@ -6,6 +6,7 @@ import router from "./router";
 
 //使用ElementUI
 Vue.use(ElementUI);
+import './permission'
 
 //false 开发环境 更多警告来方便调试代码
 //true 生产环境 警告没有用 反而增加应用体积???

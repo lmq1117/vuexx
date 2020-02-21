@@ -358,16 +358,24 @@ module.exports = {
 
    ![image-20200214204148525](C:\Users\kevin\AppData\Roaming\Typora\typora-user-images\image-20200214204148525.png)
 
-第七章 系统登录管理
+## 第七章 系统登录管理
 
-7.1 需求分析
+### 7.1 需求分析
 
 开发登录页面，当输入账号 密码 验证通过后，允许进行到首页。
 
-7.2 路由配置
+### 7.2 路由配置
 
 1. 在src/views/login目录下新建index.vue
-2. 在src/routers.js中配置路由 （把原有的路由删除） 如下
+2. 在src/router/index.js中配置路由 （把原有的路由删除） 如下
+
+第八章 项目布局、权限、退出
+
+8.1 需求分析
+
+上、下（左右）布局，分别为 头部 左侧导航 右侧主区域
+
+8.2 路由配置
 
 
 
